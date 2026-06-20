@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="student_rover">
+  <xacro:property name="body_x" value="0.30"/>
+  <xacro:property name="body_y" value="0.20"/>
+  <xacro:property name="body_z" value="0.10"/>
+  <xacro:property name="wheelbase" value="0.24"/>
+  <xacro:property name="track_width" value="0.28"/>
+  <xacro:property name="leg_length" value="0.15"/>
+  <xacro:property name="leg_thickness" value="0.035"/>
+  <xacro:property name="wheel_radius" value="0.08"/>
+  <xacro:property name="wheel_width" value="0.04"/>
+
+  <xacro:property name="body_mass" value="1.20"/>
+  <xacro:property name="leg_mass" value="0.12"/>
+  <xacro:property name="wheel_mass" value="0.08"/>
+  <xacro:property name="lidar_box_x" value="0.045"/>
+  <xacro:property name="lidar_box_y" value="0.045"/>
+  <xacro:property name="lidar_box_z" value="0.030"/>
+  <xacro:property name="camera_box_x" value="0.030"/>
+  <xacro:property name="camera_box_y" value="0.022"/>
+  <xacro:property name="camera_box_z" value="0.022"/>
+  <xacro:property name="camera_mass" value="0.02"/>
+
+  <xacro:macro name="box_inertial" params="mass x y z ox:=0 oy:=0 oz:=0">
+    <inertial>
+      <origin xyz="${ox} ${oy} ${oz}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${mass*(y*y+z*z)/12.0}" ixy="0" ixz="0"
+               iyy="${mass*(x*x+z*z)/12.0}" iyz="0"
+               izz="${mass*(x*x+y*y)/12.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- Cylinder axis is the wheel joint y-axis. -->
+  <xacro:macro name="wheel_inertial_y" params="mass radius width">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${mass*(3.0*radius*radius + width*width)/12.0}" ixy="0" ixz="0"
+               iyy="${0.5*mass*radius*radius}" iyz="0"
+               izz="${mass*(3.0*radius*radius + width*width)/12.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 -0.04025" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find rover_description)/meshes/visual/body_visual_simplified.glb" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="${body_x} ${body_y} ${body_z}"/></geometry>
+    </collision>
+    <xacro:box_inertial mass="${body_mass}" x="${body_x}" y="${body_y}" z="${body_z}"/>
+  </link>
+
+  <link name="lidar_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="${lidar_box_x} ${lidar_box_y} ${lidar_box_z}"/></geometry>
+      <material name="lidar_gray">
+        <color rgba="0.20 0.20 0.24 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 ${body_z/2.0 + lidar_box_z/2.0}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="front_camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="${camera_box_x} ${camera_box_y} ${camera_box_z}"/></geometry>
+      <material name="camera_black">
+        <color rgba="0.10 0.10 0.12 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="${camera_box_x} ${camera_box_y} ${camera_box_z}"/></geometry>
+    </collision>
+    <xacro:box_inertial mass="${camera_mass}" x="${camera_box_x}" y="${camera_box_y}" z="${camera_box_z}"/>
+  </link>
+
+  <joint name="front_camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_camera_link"/>
+    <!-- Front-face mount with a mild downward view between the tested extremes. -->
+    <origin xyz="${body_x/2.0 + camera_box_x/2.0} 0 0" rpy="0 0.065 0"/>
+  </joint>
+
+  <xacro:macro name="leg_and_wheel" params="prefix x y">
+    <link name="${prefix}_leg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find rover_description)/meshes/visual/arm_visual_simplified.glb" scale="1 1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-leg_length/2.0}" rpy="0 0 0"/>
+        <geometry><box size="${leg_thickness} ${leg_thickness} ${leg_length}"/></geometry>
+      </collision>
+      <xacro:box_inertial mass="${leg_mass}" x="${leg_thickness}" y="${leg_thickness}" z="${leg_length}" oz="${-leg_length/2.0}"/>
+    </link>
+
+    <joint name="${prefix}_leg_joint" type="revolute">
+      <parent link="base_link"/>
+      <child link="${prefix}_leg_link"/>
+      <origin xyz="${x} ${y} ${-body_z/2.0}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.7" upper="0.7" effort="25" velocity="1.0"/>
+      <dynamics damping="1.0" friction="0.2"/>
+    </joint>
+
+    <link name="${prefix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find rover_description)/meshes/visual/wheel_visual_simplified.glb" scale="1 1 1"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      </collision>
+      <xacro:wheel_inertial_y mass="${wheel_mass}" radius="${wheel_radius}" width="${wheel_width}"/>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="${prefix}_leg_link"/>
+      <child link="${prefix}_wheel_link"/>
+      <origin xyz="0 0 ${-leg_length}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.02" friction="0.01"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:leg_and_wheel prefix="front_left"  x="${ wheelbase/2.0}" y="${ track_width/2.0}"/>
+  <xacro:leg_and_wheel prefix="front_right" x="${ wheelbase/2.0}" y="${-track_width/2.0}"/>
+  <xacro:leg_and_wheel prefix="rear_left"   x="${-wheelbase/2.0}" y="${ track_width/2.0}"/>
+  <xacro:leg_and_wheel prefix="rear_right"  x="${-wheelbase/2.0}" y="${-track_width/2.0}"/>
+
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <xacro:macro name="wheel_ros2_control" params="joint_name">
+      <joint name="${joint_name}">
+        <command_interface name="velocity">
+          <param name="min">-20.0</param>
+          <param name="max">20.0</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:macro>
+
+    <xacro:macro name="leg_ros2_control" params="joint_name">
+      <joint name="${joint_name}">
+        <command_interface name="position">
+          <param name="min">-0.7</param>
+          <param name="max">0.7</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:macro>
+
+    <xacro:leg_ros2_control joint_name="front_left_leg_joint"/>
+    <xacro:leg_ros2_control joint_name="front_right_leg_joint"/>
+    <xacro:leg_ros2_control joint_name="rear_left_leg_joint"/>
+    <xacro:leg_ros2_control joint_name="rear_right_leg_joint"/>
+
+    <xacro:wheel_ros2_control joint_name="front_left_wheel_joint"/>
+    <xacro:wheel_ros2_control joint_name="front_right_wheel_joint"/>
+    <xacro:wheel_ros2_control joint_name="rear_left_wheel_joint"/>
+    <xacro:wheel_ros2_control joint_name="rear_right_wheel_joint"/>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find rover_gazebo)/config/rover_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="lidar_link">
+    <sensor name="front_planar_lidar" type="gpu_lidar">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <visualize>true</visualize>
+      <gz_frame_id>lidar_link</gz_frame_id>
+      <topic>/scan</topic>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>181</samples>
+            <resolution>1</resolution>
+            <min_angle>${-pi/2.0}</min_angle>
+            <max_angle>${pi/2.0}</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>1</samples>
+            <resolution>1</resolution>
+            <min_angle>0</min_angle>
+            <max_angle>0</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>8.00</max>
+          <resolution>0.01</resolution>
+        </range>
+      </lidar>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="front_camera_link">
+    <sensor name="front_camera" type="camera">
+      <always_on>true</always_on>
+      <update_rate>8</update_rate>
+      <visualize>false</visualize>
+      <gz_frame_id>front_camera_link</gz_frame_id>
+      <topic>/front_camera</topic>
+      <camera>
+        <horizontal_fov>1.047</horizontal_fov>
+        <image>
+          <width>320</width>
+          <height>240</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>10.0</far>
+        </clip>
+      </camera>
+    </sensor>
+  </gazebo>
+</robot>

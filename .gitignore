@@ -1,0 +1,38 @@
+# Python and editor caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.vscode/
+.idea/
+.venv/
+*.Zone.Identifier
+
+# ROS 2 workspace outputs
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+build/
+install/
+log/
+
+# Runtime artifacts
+*.bag
+*.db3
+*.mcap
+*.log
+screenshots/
+videos/
+captures/
+outputs/
+*.wbproj
+.webots_state/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Incoming assets and scratch drops
+_incomming/

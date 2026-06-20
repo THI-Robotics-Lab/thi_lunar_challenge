@@ -1,0 +1,20 @@
+{
+  "normalized_bounds": {
+    "dimensions": [
+      0.018685,
+      0.021141,
+      0.020953
+    ],
+    "max": [
+      0.009343,
+      0.010571,
+      0.020953
+    ],
+    "min": [
+      -0.009343,
+      -0.010571,
+      0.0
+    ]
+  },
+  "source_asset": "/home/turnwald/robot_assets/external_repos/srb_assets_sparse/object/rock/apollo_sample20.usdz"
+}

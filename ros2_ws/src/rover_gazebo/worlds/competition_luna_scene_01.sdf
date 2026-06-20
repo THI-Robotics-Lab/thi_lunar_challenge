@@ -1,0 +1,911 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="competition_luna_scene_01">
+    <gravity>0 0 -1.62</gravity>
+    <magnetic_field>0 0 0</magnetic_field>
+    <atmosphere type="adiabatic"/>
+
+    <physics name="default_physics" default="true" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <scene>
+      <ambient>0.035 0.035 0.04 1</ambient>
+      <background>0.0 0.0 0.0 1</background>
+      <grid>false</grid>
+      <shadows>true</shadows>
+    </scene>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun_lunar_scene_01">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 13 0 0 0</pose>
+      <attenuation>
+        <range>1200</range>
+        <constant>1</constant>
+        <linear>0</linear>
+        <quadratic>0</quadratic>
+      </attenuation>
+      <diffuse>0.96 0.93 0.86 1</diffuse>
+      <specular>0.22 0.22 0.22 1</specular>
+      <direction>-0.5 0.18 -0.85</direction>
+    </light>
+
+    <model name="lunar_ground">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <!-- Stable driving surface: its top is exactly z=0, so all four
+               wheels settle on the same ground plane. -->
+          <pose>0 0 -0.040000 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>24 24 0.08</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <!-- Crater relief is shallow scenery. Visible collidable rock
+               clumps around selected rims intersect the horizontal scan. -->
+          <pose>0 0 -0.063551 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///tmp/thirover_scene_01_assets/terrain/lunar_scene_01_terrain.obj</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <!-- Explicit SDF values keep the OBJ gray even if its MTL is ignored. -->
+          <material>
+            <ambient>0.34 0.335 0.325 1</ambient>
+            <diffuse>0.52 0.51 0.49 1</diffuse>
+            <specular>0.015 0.015 0.015 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- BEGIN GENERATED ROCK MODELS: run scripts/generate_luna_scene_01_assets.py -->
+    <!-- northwest_large_partial_arc -->
+    <model name="apollo_scene_01">
+      <static>true</static>
+      <pose>-5.584 6.591 0.2877 0 0 1.2086</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.179789 0 0 0</pose>
+          <geometry><box><size>0.325168 0.421841 0.359578</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>17.4026 19.9537 17.1612</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northwest_large_partial_arc -->
+    <model name="apollo_scene_02">
+      <static>true</static>
+      <pose>-5.932 7.400 0.2190 0 0 -2.5251</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.217700 0 0 0</pose>
+          <geometry><box><size>0.425819 0.530831 0.435400</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>22.7893 25.1091 20.7798</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northwest_large_partial_arc -->
+    <model name="apollo_scene_03">
+      <static>true</static>
+      <pose>-6.489 8.088 0.2934 0 0 1.5871</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.257207 0 0 0</pose>
+          <geometry><box><size>0.433057 0.478100 0.514414</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>23.1767 22.6148 24.5509</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northwest_large_partial_arc -->
+    <model name="apollo_scene_04">
+      <static>true</static>
+      <pose>-7.362 8.327 0.2920 0 0 1.7136</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.239764 0 0 0</pose>
+          <geometry><box><size>0.406526 0.481813 0.479528</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>21.7568 22.7905 22.8859</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northwest_large_partial_arc -->
+    <model name="apollo_scene_05">
+      <static>true</static>
+      <pose>-8.252 8.026 0.2440 0 0 -1.4617</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.226424 0 0 0</pose>
+          <geometry><box><size>0.381921 0.429445 0.452849</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>20.4400 20.3134 21.6126</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northeast_pair_a_partial_arc -->
+    <model name="apollo_scene_06">
+      <static>true</static>
+      <pose>6.636 6.503 0.2398 0 0 0.1397</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.270607 0 0 0</pose>
+          <geometry><box><size>0.496744 0.585836 0.541214</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>26.5852 27.7109 25.8299</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northeast_pair_a_partial_arc -->
+    <model name="apollo_scene_07">
+      <static>true</static>
+      <pose>6.774 7.169 0.2437 0 0 0.5203</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.278400 0 0 0</pose>
+          <geometry><box><size>0.478890 0.470922 0.556799</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>25.6296 22.2753 26.5737</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northeast_pair_a_partial_arc -->
+    <model name="apollo_scene_08">
+      <static>true</static>
+      <pose>6.631 7.805 0.2721 0 0 1.7848</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.241889 0 0 0</pose>
+          <geometry><box><size>0.377408 0.413111 0.483777</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>20.1985 19.5408 23.0887</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northeast_pair_a_partial_arc -->
+    <model name="apollo_scene_09">
+      <static>true</static>
+      <pose>6.107 8.251 0.2174 0 0 1.8424</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.191048 0 0 0</pose>
+          <geometry><box><size>0.379169 0.475566 0.382096</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>20.2927 22.4950 18.2359</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northeast_pair_a_partial_arc -->
+    <model name="apollo_scene_10">
+      <static>true</static>
+      <pose>5.527 8.499 0.2627 0 0 -2.0154</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.279731 0 0 0</pose>
+          <geometry><box><size>0.460782 0.514165 0.559462</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>24.6605 24.3208 26.7008</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southwest_pair_a_partial_arc -->
+    <model name="apollo_scene_11">
+      <static>true</static>
+      <pose>-7.407 -4.206 0.2627 0 0 -1.6082</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.308537 0 0 0</pose>
+          <geometry><box><size>0.495510 0.563422 0.617075</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>26.5191 26.6507 29.4504</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southwest_pair_a_partial_arc -->
+    <model name="apollo_scene_12">
+      <static>true</static>
+      <pose>-8.078 -4.514 0.2815 0 0 -0.6932</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.253140 0 0 0</pose>
+          <geometry><box><size>0.387041 0.377074 0.506280</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>20.7140 17.8362 24.1626</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southwest_pair_a_partial_arc -->
+    <model name="apollo_scene_13">
+      <static>true</static>
+      <pose>-8.583 -5.112 0.2810 0 0 1.5543</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.246274 0 0 0</pose>
+          <geometry><box><size>0.470249 0.614166 0.492548</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>25.1672 29.0510 23.5073</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southwest_pair_a_partial_arc -->
+    <model name="apollo_scene_14">
+      <static>true</static>
+      <pose>-8.696 -5.857 0.2639 0 0 0.5238</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.271267 0 0 0</pose>
+          <geometry><box><size>0.414159 0.434662 0.542534</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>22.1653 20.5601 25.8929</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southwest_pair_a_partial_arc -->
+    <model name="apollo_scene_15">
+      <static>true</static>
+      <pose>-8.657 -6.670 0.1732 0 0 2.5159</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.255713 0 0 0</pose>
+          <geometry><box><size>0.488150 0.584534 0.511425</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>26.1252 27.6493 24.4082</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southeast_large_partial_arc -->
+    <model name="apollo_scene_16">
+      <static>true</static>
+      <pose>4.811 -6.897 0.2413 0 0 1.5822</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.232665 0 0 0</pose>
+          <geometry><box><size>0.463132 0.529932 0.465329</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>24.7863 25.0666 22.2082</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southeast_large_partial_arc -->
+    <model name="apollo_scene_17">
+      <static>true</static>
+      <pose>5.362 -7.609 0.2573 0 0 2.7105</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.281541 0 0 0</pose>
+          <geometry><box><size>0.427272 0.503927 0.563082</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>22.8671 23.8365 26.8736</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southeast_large_partial_arc -->
+    <model name="apollo_scene_18">
+      <static>true</static>
+      <pose>6.168 -8.031 0.2032 0 0 1.2628</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.215702 0 0 0</pose>
+          <geometry><box><size>0.405383 0.453889 0.431405</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>21.6956 21.4696 20.5892</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southeast_large_partial_arc -->
+    <model name="apollo_scene_19">
+      <static>true</static>
+      <pose>7.034 -7.808 0.3055 0 0 2.0035</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.270150 0 0 0</pose>
+          <geometry><box><size>0.443950 0.444129 0.540301</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>23.7597 21.0079 25.7863</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southeast_large_partial_arc -->
+    <model name="apollo_scene_20">
+      <static>true</static>
+      <pose>7.817 -7.355 0.3046 0 0 -0.9458</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.287375 0 0 0</pose>
+          <geometry><box><size>0.520732 0.503062 0.574749</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>27.8690 23.7955 27.4304</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- west_cluster -->
+    <model name="apollo_scene_21">
+      <static>true</static>
+      <pose>-9.459 -0.304 0.0000 0 0 2.2839</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.221268 0 0 0</pose>
+          <geometry><box><size>0.337038 0.336408 0.442535</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>18.0379 15.9126 21.1204</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- west_cluster -->
+    <model name="apollo_scene_22">
+      <static>true</static>
+      <pose>-9.423 -1.044 0.0000 0 0 -1.5556</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.181073 0 0 0</pose>
+          <geometry><box><size>0.311944 0.344435 0.362145</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>16.6949 16.2923 17.2837</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- west_cluster -->
+    <model name="apollo_scene_23">
+      <static>true</static>
+      <pose>-8.341 -1.369 0.0000 0 0 1.2292</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.202431 0 0 0</pose>
+          <geometry><box><size>0.399590 0.513181 0.404862</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>21.3856 24.2742 19.3224</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- west_cluster -->
+    <model name="apollo_scene_24">
+      <static>true</static>
+      <pose>-8.310 -0.119 0.0000 0 0 -2.3206</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.134815 0 0 0</pose>
+          <geometry><box><size>0.270966 0.347341 0.269630</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>14.5018 16.4298 12.8683</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- north_cluster -->
+    <model name="apollo_scene_25">
+      <static>true</static>
+      <pose>0.097 7.571 0.0000 0 0 0.1765</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.153182 0 0 0</pose>
+          <geometry><box><size>0.294806 0.301020 0.306365</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>15.7777 14.2387 14.6215</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- north_cluster -->
+    <model name="apollo_scene_26">
+      <static>true</static>
+      <pose>0.538 6.972 0.0000 0 0 -1.4093</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.184606 0 0 0</pose>
+          <geometry><box><size>0.350995 0.374506 0.369212</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>18.7848 17.7147 17.6210</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- north_cluster -->
+    <model name="apollo_scene_27">
+      <static>true</static>
+      <pose>-0.102 6.725 0.0000 0 0 0.1057</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.153474 0 0 0</pose>
+          <geometry><box><size>0.281466 0.274985 0.306948</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>15.0637 13.0072 14.6493</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- north_cluster -->
+    <model name="apollo_scene_28">
+      <static>true</static>
+      <pose>0.617 7.793 0.0000 0 0 -2.6111</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.273227 0 0 0</pose>
+          <geometry><box><size>0.432804 0.482097 0.546455</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>23.1632 22.8039 26.0800</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- east_cluster -->
+    <model name="apollo_scene_29">
+      <static>true</static>
+      <pose>8.077 2.609 0.2307 0 0 -1.6162</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.189543 0 0 0</pose>
+          <geometry><box><size>0.351112 0.453905 0.379087</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>18.7911 21.4704 18.0922</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- east_cluster -->
+    <model name="apollo_scene_30">
+      <static>true</static>
+      <pose>9.181 2.263 0.2928 0 0 1.7312</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.190023 0 0 0</pose>
+          <geometry><box><size>0.291572 0.355053 0.380046</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>15.6046 16.7945 18.1380</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- east_cluster -->
+    <model name="apollo_scene_31">
+      <static>true</static>
+      <pose>8.578 2.516 0.2304 0 0 0.9925</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.174518 0 0 0</pose>
+          <geometry><box><size>0.268041 0.307847 0.349037</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>14.3452 14.5616 16.6581</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- south_cluster -->
+    <model name="apollo_scene_32">
+      <static>true</static>
+      <pose>-1.111 -8.199 0.0007 0 0 0.2359</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.152840 0 0 0</pose>
+          <geometry><box><size>0.277699 0.349622 0.305679</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>14.8621 16.5377 14.5888</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- south_cluster -->
+    <model name="apollo_scene_33">
+      <static>true</static>
+      <pose>-0.543 -7.932 0.1404 0 0 2.5121</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.269404 0 0 0</pose>
+          <geometry><box><size>0.447826 0.521320 0.538809</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>23.9672 24.6592 25.7151</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- south_cluster -->
+    <model name="apollo_scene_34">
+      <static>true</static>
+      <pose>-1.434 -9.310 0.0020 0 0 -1.3235</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.168082 0 0 0</pose>
+          <geometry><box><size>0.335388 0.358100 0.336164</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>17.9496 16.9386 16.0437</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_35">
+      <static>true</static>
+      <pose>-9.800 8.800 0.0000 0 0 0.3953</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.205350 0 0 0</pose>
+          <geometry><box><size>0.316152 0.412441 0.410700</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>16.9201 19.5090 19.6010</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_36">
+      <static>true</static>
+      <pose>-5.200 9.000 0.0024 0 0 -1.6043</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.202077 0 0 0</pose>
+          <geometry><box><size>0.356520 0.425998 0.404153</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>19.0805 20.1503 19.2886</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_37">
+      <static>true</static>
+      <pose>2.800 9.400 0.0000 0 0 0.9504</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.137515 0 0 0</pose>
+          <geometry><box><size>0.269581 0.349344 0.275030</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>14.4277 16.5245 13.1260</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_38">
+      <static>true</static>
+      <pose>9.700 8.000 0.0000 0 0 0.6785</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.168266 0 0 0</pose>
+          <geometry><box><size>0.277453 0.301919 0.336531</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>14.8490 14.2812 16.0613</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_39">
+      <static>true</static>
+      <pose>-9.400 -8.700 0.0011 0 0 0.1235</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.180380 0 0 0</pose>
+          <geometry><box><size>0.314925 0.313011 0.360759</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>16.8544 14.8059 17.2175</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_40">
+      <static>true</static>
+      <pose>-4.700 -5.000 0.0020 0 0 -1.3296</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.195702 0 0 0</pose>
+          <geometry><box><size>0.391794 0.484585 0.391404</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>20.9684 22.9216 18.6801</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_41">
+      <static>true</static>
+      <pose>3.600 -8.800 0.0000 0 0 1.1792</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.139128 0 0 0</pose>
+          <geometry><box><size>0.244082 0.299789 0.278255</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>13.0630 14.1805 13.2800</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- sparse_field -->
+    <model name="apollo_scene_42">
+      <static>true</static>
+      <pose>9.400 -8.500 0.0012 0 0 -0.5520</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.208263 0 0 0</pose>
+          <geometry><box><size>0.317044 0.340979 0.416525</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/apollo_sample20.glb</uri><scale>16.9678 16.1288 19.8790</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- west_anchor -->
+    <model name="boulder_scene_43">
+      <static>true</static>
+      <pose>-9.100 4.200 0.0000 0 0 1.1595</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.674252 0 0 0</pose>
+          <geometry><box><size>1.119850 1.715431 1.348505</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/lunalab_boulder1.glb</uri><scale>2.1177 2.1463 2.1410</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southwest_anchor -->
+    <model name="boulder_scene_44">
+      <static>true</static>
+      <pose>-5.800 -8.900 0.0000 0 0 -1.3495</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.709427 0 0 0</pose>
+          <geometry><box><size>1.077288 1.693713 1.418854</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/lunalab_boulder1.glb</uri><scale>2.0372 2.1191 2.2527</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- north_anchor -->
+    <model name="boulder_scene_45">
+      <static>true</static>
+      <pose>1.800 6.000 0.0000 0 0 -2.6100</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.476743 0 0 0</pose>
+          <geometry><box><size>0.938572 1.584397 0.953486</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/lunalab_boulder1.glb</uri><scale>1.7749 1.9823 1.5138</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- northeast_anchor -->
+    <model name="boulder_scene_46">
+      <static>true</static>
+      <pose>7.500 7.800 0.0012 0 0 -0.6126</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.576449 0 0 0</pose>
+          <geometry><box><size>1.015899 1.673783 1.152898</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/lunalab_boulder1.glb</uri><scale>1.9211 2.0942 1.8305</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- east_anchor -->
+    <model name="boulder_scene_47">
+      <static>true</static>
+      <pose>8.800 -1.800 0.0000 0 0 -0.7994</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.472049 0 0 0</pose>
+          <geometry><box><size>0.813323 1.249263 0.944098</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/lunalab_boulder1.glb</uri><scale>1.5380 1.5630 1.4989</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- southeast_anchor -->
+    <model name="boulder_scene_48">
+      <static>true</static>
+      <pose>5.000 -8.500 0.0000 0 0 0.3594</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.597658 0 0 0</pose>
+          <geometry><box><size>1.037543 1.380610 1.195316</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><mesh><uri>file:///tmp/thirover_scene_01_assets/object/rock/lunalab_boulder1.glb</uri><scale>1.9620 1.7274 1.8978</scale></mesh></geometry>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- west_border_wall -->
+    <model name="west_border_wall_scene_01">
+      <static>true</static>
+      <pose>-12.000 0.000 0.475 0 0 0.000000</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+          <material><ambient>0.60 0.57 0.50 1</ambient><diffuse>0.60 0.57 0.50 1</diffuse></material>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- east_border_wall -->
+    <model name="east_border_wall_scene_01">
+      <static>true</static>
+      <pose>12.000 0.000 0.475 0 0 0.000000</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+          <material><ambient>0.60 0.57 0.50 1</ambient><diffuse>0.60 0.57 0.50 1</diffuse></material>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- south_border_wall -->
+    <model name="south_border_wall_scene_01">
+      <static>true</static>
+      <pose>0.000 -12.000 0.475 0 0 1.570796</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+          <material><ambient>0.60 0.57 0.50 1</ambient><diffuse>0.60 0.57 0.50 1</diffuse></material>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- north_border_wall -->
+    <model name="north_border_wall_scene_01">
+      <static>true</static>
+      <pose>0.000 12.000 0.475 0 0 1.570796</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.280 25.000 0.950</size></box></geometry>
+          <material><ambient>0.60 0.57 0.50 1</ambient><diffuse>0.60 0.57 0.50 1</diffuse></material>
+          <cast_shadows>true</cast_shadows>
+        </visual>
+      </link>
+    </model>
+    <!-- END GENERATED ROCK MODELS -->
+  </world>
+</sdf>
