@@ -3,8 +3,8 @@
 ROS 2 Jazzy + Gazebo rover simulation stack for the THI rover project.
 
 The active workflow uses the persistent Docker container
-`thirover_gz_jazzy_gui`. The repository is mounted inside the container at
-`/workspace/thirover`.
+`thi_lunar_challenge_gz_jazzy_gui`. The repository is mounted inside the
+container at `/workspace/thi_lunar_challenge`.
 The public image is:
 
 ```text
@@ -13,7 +13,7 @@ ghcr.io/turnwald/thirover-gz-jazzy-gui:latest
 The repository is:
 
 ```text
-https://github.com/turnwald/thirover.git
+https://github.com/THI-Robotics-Lab/thi_lunar_challenge.git
 ```
 
 ## How to Use
@@ -21,8 +21,8 @@ https://github.com/turnwald/thirover.git
 ### Clone
 
 ```bash
-git clone https://github.com/turnwald/thirover.git thirover
-cd thirover
+git clone https://github.com/THI-Robotics-Lab/thi_lunar_challenge.git thi_lunar_challenge
+cd thi_lunar_challenge
 ```
 
 ### Start
@@ -79,7 +79,7 @@ From the WSL terminal:
 Inside the dev shell:
 
 ```bash
-cd /workspace/thirover/ros2_ws
+cd /workspace/thi_lunar_challenge/ros2_ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install --packages-select rover_description rover_gazebo rover_autonomy
 source install/setup.bash
@@ -134,7 +134,7 @@ RViz and keyboard teleop are available separately:
 Start Gazebo first. Then open a second WSL terminal in the repository and run:
 
 ```bash
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy autonomy_controller.launch.py'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy autonomy_controller.launch.py'
 ```
 
 Equivalent direct ROS command inside a sourced container shell:
@@ -151,7 +151,7 @@ low-speed velocity commands to `/cmd_vel`.
 Start Gazebo first. Then open another WSL terminal in the repository and run:
 
 ```bash
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy lidar_control.launch.py'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy lidar_control.launch.py'
 ```
 
 Equivalent direct ROS command inside a sourced container shell:
@@ -201,7 +201,7 @@ you want to react to obstacles from the LaserScan topic.
 2. Rebuild:
 
    ```bash
-   ./scripts/gazebo_dev_shell.sh bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && colcon build --symlink-install --packages-select rover_autonomy'
+   ./scripts/gazebo_dev_shell.sh bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && colcon build --symlink-install --packages-select rover_autonomy'
    ```
 
 3. Start the main simulation path:
@@ -219,13 +219,13 @@ you want to react to obstacles from the LaserScan topic.
 5. Run the odometry-only baseline in a second terminal:
 
    ```bash
-   ./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy autonomy_controller.launch.py'
+   ./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy autonomy_controller.launch.py'
    ```
 
 6. Or run the LiDAR control example:
 
    ```bash
-   ./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy lidar_control.launch.py'
+   ./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy lidar_control.launch.py'
    ```
 
 7. Check your changes:
@@ -249,11 +249,11 @@ you want to react to obstacles from the LaserScan topic.
 After Gazebo is running:
 
 ```bash
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic list'
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 control list_controllers'
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic echo /odom --once'
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic info /scan'
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic echo /scan --once'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic list'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 control list_controllers'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic echo /odom --once'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic info /scan'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 topic echo /scan --once'
 ```
 
 Open RViz with:
@@ -268,7 +268,7 @@ segments from the LiDAR origin to finite scan returns, start the ray overlay in
 another WSL terminal while Gazebo is running:
 
 ```bash
-./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thirover/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy scan_rays.launch.py'
+./scripts/exec_in_gazebo_container.sh --user bash -lc 'cd /workspace/thi_lunar_challenge/ros2_ws && source /opt/ros/jazzy/setup.bash && source install/setup.bash && ros2 launch rover_autonomy scan_rays.launch.py'
 ```
 
 If you want Gazebo, RViz, and the ray overlay in one shot, use:
