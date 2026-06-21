@@ -3,7 +3,8 @@ Panels:
     Help Height: 70
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 240
   - Class: rviz_common/Views
@@ -191,7 +192,7 @@ Visualization Manager:
       Selectable: true
       Size (Pixels): 8
       Size (m): 0.009999999776482582
-      Style: Flat Squares
+      Style: Points
       Topic:
         Depth: 10
         Durability Policy: Volatile
@@ -247,7 +248,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3.4850921630859375
+      Distance: 9.473816871643066
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -262,10 +263,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5750002264976501
+      Pitch: 1.4750003814697266
       Target Frame: base_link
       Value: Orbit (rviz_default_plugins)
-      Yaw: 2.250001907348633
+      Yaw: 2.875
     Saved: ~
 Window Geometry:
   Displays:
@@ -279,5 +280,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 1058
-  Y: 351
+  X: 1026
+  Y: 319
