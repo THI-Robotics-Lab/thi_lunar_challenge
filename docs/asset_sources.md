@@ -25,6 +25,16 @@
 - `object/rock/lunalab_boulder3.usdz` - 6.5M
 - `object/rock/spaceport_moon_rock2.usdz` - 7.1M
 
+## New Asset Added
+
+- **Space Spheremaps - Plain Starfield No Haze 1**
+  - File: `external-assets/space_spheremaps/plain_starfield_no_haze_1.png`
+  - Repo copy: `ros2_ws/src/rover_gazebo/assets/luna/sky/plain_starfield_no_haze_1.png`
+  - Scene 02 dome wrapper: `ros2_ws/src/rover_gazebo/meshes/world/sky_dome_plain_starfield_no_haze_1.glb`
+  - Source: https://www.spacespheremaps.com/plain-starfield-spheremaps/
+  - License: CC0 (Public Domain) - https://www.spacespheremaps.com/about/
+  - Attribution: https://www.spacespheremaps.com/about/ (No attribution required for CC0)
+
 ## Conclusion
 
 - No suitable directly loadable lunar rock/surface asset exists in this repo snapshot for the Gazebo probe without conversion or new asset generation.

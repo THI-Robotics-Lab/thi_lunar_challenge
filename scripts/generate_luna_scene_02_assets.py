@@ -80,6 +80,7 @@ ASSET_FILENAMES = {
 
 GENERATED_BEGIN = "    <!-- BEGIN GENERATED ROCK MODELS: run scripts/generate_luna_scene_02_assets.py -->"
 GENERATED_END = "    <!-- END GENERATED ROCK MODELS -->"
+SKY_DOME_URI = "file:///tmp/thirover_scene_02_assets/sky/sky_dome_plain_starfield_no_haze_1.glb"
 
 
 def _load_bbox_dimensions(path: Path) -> tuple[float, float, float]:
@@ -403,6 +404,25 @@ def border_wall_sdf(scene_id: str, side: str) -> str:
     </model>'''
 
 
+def sky_dome_sdf() -> str:
+    return f'''    <!-- Sky dome with starfield texture -->
+    <model name="sky_dome_starfield">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="sky_link">
+        <visual name="sky_visual">
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <mesh>
+              <uri>{SKY_DOME_URI}</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>'''
+
+
 def update_world(
     world_path: Path,
     rocks: list[RockPlacement],
@@ -455,7 +475,14 @@ def update_world(
     borders = "\n\n".join(border_wall_sdf(scene_id, side) for side in ("west", "east", "south", "north"))
     models = f"{models}\n\n{borders}"
     generated = f"{GENERATED_BEGIN}\n{models}\n{GENERATED_END}"
-    world_path.write_text(text[:start] + generated + text[end:], encoding="utf-8")
+    text = text[:start] + generated + text[end:]
+    sky_start = text.find("    <!-- Sky dome with starfield texture -->")
+    if sky_start != -1:
+        world_close = text.rfind("  </world>")
+        if world_close == -1 or world_close < sky_start:
+            raise ValueError(f"expected world closing tag in {world_path}")
+        text = text[:sky_start] + sky_dome_sdf() + "\n\n" + text[world_close:]
+    world_path.write_text(text, encoding="utf-8")
 
 
 def ensure_world_template(world_path: Path, scene_id: str, world_name: str) -> None:
@@ -534,6 +561,8 @@ def ensure_world_template(world_path: Path, scene_id: str, world_name: str) -> N
         </visual>
       </link>
     </model>
+
+    {sky_dome_sdf()}
 
     {GENERATED_BEGIN}
     {GENERATED_END}

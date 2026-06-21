@@ -91,6 +91,8 @@ Scene 02 generator:
   * writes rock models and border walls into the generated block in the SDF
 * Command pattern:
 
+Current standard command:
+
 ```bash
 python3 scripts/generate_luna_scene_02_assets.py \
   --scene-id 02 \
@@ -98,7 +100,7 @@ python3 scripts/generate_luna_scene_02_assets.py \
   --output-dir outputs/competition_luna_scene_02/terrain \
   --world ros2_ws/src/rover_gazebo/worlds/competition_luna_scene_02.sdf \
   --world-name competition_luna_scene_02 \
-  --crater-rim-height-scale 4.5 \
+  --crater-rim-height-scale 2.5 \
   --ground-lift-m 0.04
 ```
 

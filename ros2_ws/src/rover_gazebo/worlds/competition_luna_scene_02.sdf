@@ -90,7 +90,7 @@
     <!-- rock:s02 -->
     <model name="apollo_sample20_scene_02_s02_02">
       <static>true</static>
-      <pose>-6.000 5.200 0.1650 0 0 0.0000</pose>
+      <pose>-6.000 5.200 0.1044 0 0 0.0000</pose>
       <link name="link">
         <collision name="collision">
           <pose>0 0 0.188577 0 0 0</pose>
@@ -375,5 +375,23 @@
       </link>
     </model>
     <!-- END GENERATED ROCK MODELS -->
+    
+    <!-- Sky dome with starfield texture -->
+    <model name="sky_dome_starfield">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="sky_link">
+        <visual name="sky_visual">
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <mesh>
+              <uri>file:///tmp/thirover_scene_02_assets/sky/sky_dome_plain_starfield_no_haze_1.glb</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
   </world>
 </sdf>

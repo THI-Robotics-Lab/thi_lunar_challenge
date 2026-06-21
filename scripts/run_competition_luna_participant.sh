@@ -87,6 +87,7 @@ terrain_obj="${scene_output_dir}/${terrain_name}.obj"
 terrain_mtl="${scene_output_dir}/${terrain_name}.mtl"
 install_setup="${repo_root}/ros2_ws/install/setup.bash"
 rock_src_root="${repo_root}/ros2_ws/src/rover_gazebo/assets/luna/rock"
+sky_src_root="${repo_root}/ros2_ws/src/rover_gazebo/meshes/world"
 required_assets=(
   "${rock_src_root}/apollo_sample20.glb"
   "${rock_src_root}/apollo_sample20.bbox.json"
@@ -151,7 +152,10 @@ container_name="${THIROVER_GZ_CONTAINER:-thirover_gz_jazzy_gui}"
 asset_dst_root="/tmp/thirover_scene_${world_padded}_assets"
 rock_dst_root="${asset_dst_root}/object/rock"
 terrain_dst_root="${asset_dst_root}/terrain"
+sky_dst_root="${asset_dst_root}/sky"
 terrain_name="lunar_scene_${world_padded}_terrain"
+sky_dome_name="sky_dome_plain_starfield_no_haze_1.glb"
+sky_signature_file="${sky_dst_root}/.${sky_dome_name}.sha256"
 
 world_path="/workspace/thirover/ros2_ws/src/rover_gazebo/worlds/competition_luna_scene_${world_padded}.sdf"
 
@@ -197,11 +201,18 @@ if docker exec "${container_name}" pgrep -f 'gz sim' >/dev/null; then
   echo "Gazebo is already running in ${container_name}; stop it before starting another world." >&2
   exit 1
 fi
-docker exec "${container_name}" bash -lc "mkdir -p '${rock_dst_root}' '${terrain_dst_root}'"
+docker exec "${container_name}" bash -lc "mkdir -p '${rock_dst_root}' '${terrain_dst_root}' '${sky_dst_root}'"
 docker cp "${rock_src_root}/apollo_sample20.glb" "${container_name}:${rock_dst_root}/apollo_sample20.glb"
 docker cp "${rock_src_root}/lunalab_boulder1.glb" "${container_name}:${rock_dst_root}/lunalab_boulder1.glb"
 docker cp "${terrain_obj}" "${container_name}:${terrain_dst_root}/${terrain_name}.obj"
 docker cp "${terrain_mtl}" "${container_name}:${terrain_dst_root}/${terrain_name}.mtl"
+sky_signature="$(
+  sha256sum "${sky_src_root}/${sky_dome_name}" | awk '{print $1}'
+)"
+if [[ ! -f "${sky_signature_file}" || "$(docker exec "${container_name}" cat "${sky_signature_file}" 2>/dev/null || true)" != "${sky_signature}" ]]; then
+  docker cp "${sky_src_root}/${sky_dome_name}" "${container_name}:${sky_dst_root}/${sky_dome_name}"
+  docker exec "${container_name}" bash -lc "printf '%s\\n' '${sky_signature}' > '${sky_signature_file}'"
+fi
 
 if [[ "$need_build" == "true" ]]; then
   echo "Build will run."
