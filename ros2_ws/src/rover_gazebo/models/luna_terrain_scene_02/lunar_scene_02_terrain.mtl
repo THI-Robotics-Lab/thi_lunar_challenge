@@ -1,0 +1,7 @@
+newmtl lunar_regolith
+Ka 0.34 0.335 0.325
+Kd 0.52 0.51 0.49
+Ks 0.015 0.015 0.015
+Ns 8.0
+d 1.0
+illum 2
