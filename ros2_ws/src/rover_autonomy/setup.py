@@ -21,8 +21,6 @@ setup(
     entry_points={
         'console_scripts': [
             'autonomy_controller = rover_autonomy.autonomy_controller:main',
-            'lidar_control = rover_autonomy.lidar_control:main',
-            'scan_rays = rover_autonomy.scan_rays:main',
         ],
     },
 )

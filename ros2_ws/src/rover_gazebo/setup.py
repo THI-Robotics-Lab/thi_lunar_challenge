@@ -27,6 +27,7 @@ setup(
             'cmd_vel_relay = rover_gazebo.cmd_vel_relay:main',
             'odom_relay = rover_gazebo.odom_relay:main',
             'rover_remote_control = rover_gazebo.rover_remote_control:main',
+            'scan_rays = rover_gazebo.scan_rays:main',
         ],
     },
 )

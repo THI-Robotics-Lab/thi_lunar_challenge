@@ -42,15 +42,19 @@ cd thi_lunar_challenge
 
 ## Write your own algorithm
 
-Edit the odometry-only baseline here:
+Edit the unified autonomy controller here:
 ```text
 ros2_ws/src/rover_autonomy/rover_autonomy/autonomy_controller.py
 ```
 
-Edit the LiDAR-based example here (if present):
-```text
-ros2_ws/src/rover_autonomy/rover_autonomy/lidar_control.py
-```
+This controller receives all sensor data:
+- `/odom` - Rover odometry data
+- `/scan` - Laser scan data
+- `/front_camera` - Front camera feed
+- `/camera_info` - Camera calibration info
+
+And publishes:
+- `/cmd_vel` - Velocity commands to rover
 
 Look for:
 ```text
