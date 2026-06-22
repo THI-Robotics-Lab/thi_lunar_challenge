@@ -71,3 +71,5 @@ WRITE YOUR ALGORITHM HERE
 ## Troubleshooting / further docs
 
 See remaining student-facing documentation in the `docs/` directory.
+
+![Initial Scene](docs/init_scene.png)
