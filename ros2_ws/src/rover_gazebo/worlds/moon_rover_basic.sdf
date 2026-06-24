@@ -44,9 +44,9 @@
       <link name="ground_link">
         <collision name="collision">
           <geometry>
-            <mesh>
-              <uri>file:///workspace/thirover/ros2_ws/install/rover_gazebo/share/rover_gazebo/meshes/world/lunar_ground_simple.obj</uri>
-            </mesh>
+             <mesh>
+               <uri>model://rover_gazebo/meshes/world/lunar_ground_simple.obj</uri>
+             </mesh>
           </geometry>
           <surface>
             <friction>
@@ -60,9 +60,9 @@
         <visual name="visual">
           <cast_shadows>true</cast_shadows>
           <geometry>
-            <mesh>
-              <uri>file:///workspace/thirover/ros2_ws/install/rover_gazebo/share/rover_gazebo/meshes/world/lunar_ground_simple.obj</uri>
-            </mesh>
+             <mesh>
+               <uri>model://rover_gazebo/meshes/world/lunar_ground_simple.obj</uri>
+             </mesh>
           </geometry>
         </visual>
       </link>
@@ -75,9 +75,9 @@
         <visual name="sky_visual">
           <cast_shadows>false</cast_shadows>
           <geometry>
-            <mesh>
-              <uri>file:///workspace/thirover/ros2_ws/install/rover_gazebo/share/rover_gazebo/meshes/world/sky_dome_moon_earth_stars.obj</uri>
-            </mesh>
+             <mesh>
+               <uri>model://rover_gazebo/meshes/world/sky_dome_moon_earth_stars.obj</uri>
+             </mesh>
           </geometry>
         </visual>
       </link>

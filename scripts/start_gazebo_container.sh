@@ -10,16 +10,24 @@ legacy_image="${THIROVER_GZ_LEGACY_IMAGE:-thirover-gz-jazzy-gui:latest}"
 base_image="${THIROVER_GZ_BASE_IMAGE:-unfrobotics/docker-ros2-jazzy-gz-rviz2:latest}"
 display_value="${DISPLAY:-:0}"
 wayland_display="wayland-0"
-xdg_runtime_dir="/mnt/wslg/runtime-dir"
-mesa_adapter="${MESA_D3D12_DEFAULT_ADAPTER_NAME:-NVIDIA}"
+# Detect platform and set appropriate WSL variables
+if [[ -d "/mnt/wslg" ]]; then
+  xdg_runtime_dir="/mnt/wslg/runtime-dir"
+  mesa_adapter="${MESA_D3D12_DEFAULT_ADAPTER_NAME:-NVIDIA}"
+else
+  xdg_runtime_dir="${XDG_RUNTIME_DIR:-/tmp/runtime}"
+  mesa_adapter="${MESA_D3D12_DEFAULT_ADAPTER_NAME:-}"
+fi
 
 required_mounts=(
   "/workspace/thirover"
-  "/mnt/wslg"
   "/tmp/.X11-unix"
   "/dev"
-  "/usr/lib/wsl"
 )
+if [[ -d "/mnt/wslg" ]]; then
+  required_mounts+=("/mnt/wslg")
+  required_mounts+=("/usr/lib/wsl")
+fi
 
 container_id="$(docker ps -aq --filter "name=^/${container_name}$")"
 
@@ -103,10 +111,8 @@ docker run -d \
   -e QT_X11_NO_MITSHM=1 \
   -e MESA_D3D12_DEFAULT_ADAPTER_NAME="${mesa_adapter}" \
   -e LD_LIBRARY_PATH="/usr/lib/wsl/lib:${LD_LIBRARY_PATH:-}" \
-  -v /mnt/wslg:/mnt/wslg:rw \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   -v /dev:/dev \
-  -v /usr/lib/wsl:/usr/lib/wsl:ro \
   -v "${repo_root}:/workspace/thirover" \
   -w /workspace/thirover \
   "${image}" \
